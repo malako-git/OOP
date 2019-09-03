@@ -173,54 +173,42 @@ class EditHausWindow():
         self.label2=Label(self.master, text="Vorname / Nachname",fg="black").grid(row=10,column=2)
 
 
-        global farbe_global
-        global adresse_global
-        global baujahr_global
-        global wohnflaeche_global
-        global zimmer_global
-        global preis_global
-        global grundstueckgroesse_global
-        global badezimmer_global
-        global heizart_global
-        global besitzer_global
-
-
-        farbe_global=Entry(self.master)
-        farbe_global.grid(row=1,column=1)
-        adresse_global=Entry(self.master)
-        adresse_global.grid(row=2,column=1)
-        baujahr_global=Entry(self.master)
-        baujahr_global.grid(row=3,column=1)
-        wohnflaeche_global=Entry(self.master)
-        wohnflaeche_global.grid(row=4,column=1)
-        zimmer_global=Entry(self.master)
-        zimmer_global.grid(row=5,column=1)
-        preis_global=Entry(self.master)
-        preis_global.grid(row=6,column=1)
-        grundstueckgroesse_global=Entry(self.master)
-        grundstueckgroesse_global.grid(row=7,column=1)
-        badezimmer_global=Entry(self.master)
-        badezimmer_global.grid(row=8,column=1)
-        heizart_global=Entry(self.master)
-        heizart_global.grid(row=9,column=1)
-        besitzer_global=Entry(self.master)
-        besitzer_global.grid(row=10,column=1)
+        Haus.farbe=Entry(self.master)
+        Haus.farbe.grid(row=1,column=1)
+        Haus.adresse=Entry(self.master)
+        Haus.adresse.grid(row=2,column=1)
+        Haus.baujahr=Entry(self.master)
+        Haus.baujahr.grid(row=3,column=1)
+        Haus.wohnflaeche=Entry(self.master)
+        Haus.wohnflaeche.grid(row=4,column=1)
+        Haus.zimmer=Entry(self.master)
+        Haus.zimmer.grid(row=5,column=1)
+        Haus.preis=Entry(self.master)
+        Haus.preis.grid(row=6,column=1)
+        Haus.grundstueckgroesse=Entry(self.master)
+        Haus.grundstueckgroesse.grid(row=7,column=1)
+        Haus.badezimmer=Entry(self.master)
+        Haus.badezimmer.grid(row=8,column=1)
+        Haus.heizart=Entry(self.master)
+        Haus.heizart.grid(row=9,column=1)
+        Haus.besitzer=Entry(self.master)
+        Haus.besitzer.grid(row=10,column=1)
 
 
         cur.execute("SELECT * FROM HaeuserOne WHERE oid = " + self.id)
         haeuser = cur.fetchall()
 
         for haus in haeuser:
-            farbe_global.insert(0, haus[0])
-            adresse_global.insert(0, haus[1])
-            baujahr_global.insert(0, haus[2])
-            wohnflaeche_global.insert(0, haus[3])
-            zimmer_global.insert(0, haus[4])
-            preis_global.insert(0, haus[5])
-            grundstueckgroesse_global.insert(0, haus[6])
-            badezimmer_global.insert(0, haus[7])
-            heizart_global.insert(0, haus[8])
-            besitzer_global.insert(0, haus[9])
+            Haus.farbe.insert(0, haus[0])
+            Haus.adresse.insert(0, haus[1])
+            Haus.baujahr.insert(0, haus[2])
+            Haus.wohnflaeche.insert(0, haus[3])
+            Haus.zimmer.insert(0, haus[4])
+            Haus.preis.insert(0, haus[5])
+            Haus.grundstueckgroesse.insert(0, haus[6])
+            Haus.badezimmer.insert(0, haus[7])
+            Haus.heizart.insert(0, haus[8])
+            Haus.besitzer.insert(0, haus[9])
 
         self.button1=Button(self.master, text="Haus speichern",fg="green",command=self.edit_haus).place(x = 20, y= 300, width=100, height=25)
         self.button1=Button(self.master, text="Abbrechen",fg="red",command=self.quit).place(x = 370, y= 300, width=100, height=25)
@@ -229,8 +217,9 @@ class EditHausWindow():
         self.master.destroy()
 
     def edit_haus(self):
-        Main.edit_haus_table_entry(self.id)
-
+        Main.edit_haus_table_entry(Haus.farbe.get(), Haus.adresse.get(), Haus.baujahr.get(), Haus.wohnflaeche.get(), Haus.zimmer.get(), Haus.preis.get(), Haus.grundstueckgroesse.get(), Haus.badezimmer.get(), Haus.heizart.get(), Haus.besitzer.get(), self.id.get())
+        time.sleep(.2)
+        quit()
 
 
 
@@ -255,10 +244,9 @@ class db():
 
 class Main():
 
-    def __init__(self, master, id):
+    def __init__(self, id):
 
         self.id = id
-        self.master = master
 
     def main():
         db.cur.execute("""CREATE TABLE IF NOT EXISTS HaeuserOne (
@@ -294,7 +282,7 @@ class Main():
         db.conn.commit()
         # db.conn.close()
 
-    def edit_haus_table_entry(id):
+    def edit_haus_table_entry(farbe, adresse, baujahr, wohnflaeche, zimmer, preis, grundstueckgroesse, badezimmer, heizart, besitzer, id):
 
         db.cur.execute("""UPDATE HaeuserOne SET
             Farbe = :farbe,
@@ -308,22 +296,20 @@ class Main():
             Heizart = :heizart,
             Besitzer = :besitzer
 
-            WHERE oid = :oid""",
-            {
-            "farbe": farbe_global.get(),
-            "adresse": adresse_global.get(),
-            "baujahr": baujahr_global.get(),
-            "wohnflaeche": wohnflaeche_global.get(),
-            "zimmer": zimmer_global.get(),
-            "preis": preis_global.get(),
-            "grundstueckgroesse": grundstueckgroesse_global.get(),
-            "badezimmer": badezimmer_global.get(),
-            "heizart": heizart_global.get(),
-            "besitzer": besitzer_global.get(),
+            WHERE oid = :oid"""
+            {"farbe": farbe,
+            "Adresse": adresse,
 
-            "oid": id
 
-            })
+
+            }
+
+
+
+
+            )
+
+
 
         db.conn.commit()
 
