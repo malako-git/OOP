@@ -43,6 +43,7 @@ class MainWindow():
         # print(haeuser_in_db)
 
         print_db = ""
+
         for haeuser in haeuser_in_db:
             print_db += str(haeuser[10])+ " "+"\t"+ str(haeuser[1])+ " // "+ str(haeuser[9])+"\n"
 
@@ -287,7 +288,7 @@ class Main():
 
 
     def new_haus_table_entry(farbe, adresse, baujahr, wohnflaeche, zimmer, preis, grundstueckgroesse, badezimmer, heizart, besitzer):
-
+        print("erstelle neuen eintrag in Datenbank")
         db.cur.execute("INSERT INTO HaeuserOne VALUES(?, ?, ?, ? ,?, ?, ?, ?, ?, ?)", (farbe, adresse, baujahr, wohnflaeche, zimmer, preis, grundstueckgroesse, badezimmer, heizart, besitzer))
         # cur.execute("INSERT INTO HaeuserOne (%s) VALUES(?)" %(attr),(data,))
         # cursor.execute("INSERT INTO PRESSURE (" + city + ") values (?)", (pressure,))
@@ -295,6 +296,8 @@ class Main():
         # db.conn.close()
 
     def edit_haus_table_entry(id):
+
+        print("bearbeite eintrag @ oid" + id)
 
         db.cur.execute("""UPDATE HaeuserOne SET
             Farbe = :farbe,
