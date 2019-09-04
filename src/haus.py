@@ -1,5 +1,3 @@
-
-
 class Haus():
 
     def __init__(self):

@@ -1,14 +1,13 @@
-import sqlite3
 from tkinter import *
-from MainWindow import *
+
+from edit_haus_window import *
+from main_window import *
 from db import *
-from EditHausWindow import *
 
 
 class Main():
 
     def __init__(self, master, id):
-
         self.id = id
         self.master = master
 
@@ -30,17 +29,16 @@ class Main():
 
         master = Tk()
 
-
-
         mw = MainWindow(master)
         master.mainloop()
 
-
-
+    def helloWorld():
+        print("Some")
 
     def new_haus_table_entry(farbe, adresse, baujahr, wohnflaeche, zimmer, preis, grundstueckgroesse, badezimmer, heizart, besitzer):
         print("erstelle neuen eintrag in Datenbank")
-        db.cur.execute("INSERT INTO HaeuserOne VALUES(?, ?, ?, ? ,?, ?, ?, ?, ?, ?)", (farbe, adresse, baujahr, wohnflaeche, zimmer, preis, grundstueckgroesse, badezimmer, heizart, besitzer))
+        db.cur.execute("INSERT INTO HaeuserOne VALUES(?, ?, ?, ? ,?, ?, ?, ?, ?, ?)", (
+        farbe, adresse, baujahr, wohnflaeche, zimmer, preis, grundstueckgroesse, badezimmer, heizart, besitzer))
         # cur.execute("INSERT INTO HaeuserOne (%s) VALUES(?)" %(attr),(data,))
         # cursor.execute("INSERT INTO PRESSURE (" + city + ") values (?)", (pressure,))
         db.conn.commit()
@@ -62,20 +60,20 @@ class Main():
             Besitzer = :besitzer
 
             WHERE oid = :oid""",
-            {
-            "farbe": farbe_global.get(),
-            "adresse": adresse_global.get(),
-            "baujahr": baujahr_global.get(),
-            "wohnflaeche": wohnflaeche_global.get(),
-            "zimmer": zimmer_global.get(),
-            "preis": preis_global.get(),
-            "grundstueckgroesse": grundstueckgroesse_global.get(),
-            "badezimmer": badezimmer_global.get(),
-            "heizart": heizart_global.get(),
-            "besitzer": besitzer_global.get(),
+                       {
+                           "farbe": farbe_global.get(),
+                           "adresse": adresse_global.get(),
+                           "baujahr": baujahr_global.get(),
+                           "wohnflaeche": wohnflaeche_global.get(),
+                           "zimmer": zimmer_global.get(),
+                           "preis": preis_global.get(),
+                           "grundstueckgroesse": grundstueckgroesse_global.get(),
+                           "badezimmer": badezimmer_global.get(),
+                           "heizart": heizart_global.get(),
+                           "besitzer": besitzer_global.get(),
 
-            "oid": id
+                           "oid": id
 
-            })
+                       })
 
         db.conn.commit()
