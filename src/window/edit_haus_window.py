@@ -74,7 +74,7 @@ class EditHausWindow:
         self.master.destroy()
 
     def edit_haus(self):
-        Main.edit_haus_table_entry(self.id)
+        DB_Controller.edit_haus_table_entry(self.id)
 
     def create_input_labels(self):
         label1 = Label(self.master, text="Bearbeiten sie ein Haus aus der Datenbank", fg="black").grid(row=0, column=1)

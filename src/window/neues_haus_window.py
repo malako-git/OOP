@@ -15,14 +15,17 @@ class NeuesHausWindow:
         self.label2 = self.create_info_labels()
 
         attributes = Haus.__dict__.keys()
-        newatrib = list(filter(lambda a: not a.startswith('__'), attributes))
+        self.newatrib = list(filter(lambda a: not a.startswith('__'), attributes))
 
-        my_dict={}
+        print(self.newatrib)
+
+        self.new_haus_dict={}
         count = 1
-        for atrib in newatrib:
-            my_dict[atrib] = Entry(self.master)
-            my_dict[atrib].grid(row=count, column=1)
+        for atrib in self.newatrib:
+            self.new_haus_dict[atrib] = Entry(self.master)
+            self.new_haus_dict[atrib].grid(row=count, column=1)
             count += 1
+
 
         # Haus.farbe = Entry(self.master)
         # Haus.farbe.grid(row=1, column=1)
@@ -56,17 +59,28 @@ class NeuesHausWindow:
         self.master.destroy()
 
     def add_new_haus(self):
-        db_controller.DB_Controller.new_haus_table_entry(Haus.farbe.get(), Haus.adresse.get(), Haus.baujahr.get(), Haus.wohnflaeche.get(), Haus.zimmer.get(), Haus.preis.get(), Haus.grundstueckgroesse.get(), Haus.badezimmer.get(), Haus.heizart.get(), Haus.besitzer.get())
-        Haus.farbe.delete(0, END)
-        Haus.adresse.delete(0, END)
-        Haus.baujahr.delete(0, END)
-        Haus.wohnflaeche.delete(0, END)
-        Haus.zimmer.delete(0, END)
-        Haus.preis.delete(0, END)
-        Haus.grundstueckgroesse.delete(0, END)
-        Haus.badezimmer.delete(0, END)
-        Haus.heizart.delete(0, END)
-        Haus.besitzer.delete(0, END)
+        # print(len(self.new_haus_dict))
+        # print(self.newatrib[0])
+        count = 0
+        new_haus = []
+        for atrib in self.newatrib:
+            new_haus.append(self.new_haus_dict[self.newatrib[count]].get())
+            count += 1
+
+        db_controller.DB_Controller.new_haus_table_entry(new_haus)
+
+
+        # db_controller.DB_Controller.new_haus_table_entry(new_haus_dict["farbe"], new_haus_dict[adresse], new_haus_dict[baujahr], new_haus_dict[wohnflaeche], new_haus_dict[zimmer], new_haus_dict[preis], new_haus_dict[grundstueckgroesse], new_haus_dict[badezimmer], new_haus_dict[heizart], new_haus_dict[besitzer])
+        # Haus.farbe.delete(0, END)
+        # Haus.adresse.delete(0, END)
+        # Haus.baujahr.delete(0, END)
+        # Haus.wohnflaeche.delete(0, END)
+        # Haus.zimmer.delete(0, END)
+        # Haus.preis.delete(0, END)
+        # Haus.grundstueckgroesse.delete(0, END)
+        # Haus.badezimmer.delete(0, END)
+        # Haus.heizart.delete(0, END)
+        # Haus.besitzer.delete(0, END)
 
     def create_input_labels(self):
         label1 = Label(self.master, text="Bearbeiten sie ein Haus aus der Datenbank", fg="black").grid(row=0, column=1)

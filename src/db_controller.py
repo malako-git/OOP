@@ -28,10 +28,10 @@ class DB_Controller():
         MainWindow(master)
         master.mainloop()
 
-    def new_haus_table_entry(farbe, adresse, baujahr, wohnflaeche, zimmer, preis, grundstueckgroesse, badezimmer, heizart, besitzer):
+    def new_haus_table_entry(new_haus):
         print("erstelle neuen eintrag in Datenbank")
         db.cur.execute("INSERT INTO HaeuserOne VALUES(?, ?, ?, ? ,?, ?, ?, ?, ?, ?)", (
-        farbe, adresse, baujahr, wohnflaeche, zimmer, preis, grundstueckgroesse, badezimmer, heizart, besitzer))
+        new_haus[0], new_haus[1], new_haus[2], new_haus[3], new_haus[4], new_haus[5], new_haus[6], new_haus[7], new_haus[8], new_haus[9]))
         # cur.execute("INSERT INTO HaeuserOne (%s) VALUES(?)" %(attr),(data,))
         # cursor.execute("INSERT INTO PRESSURE (" + city + ") values (?)", (pressure,))
         db.conn.commit()
