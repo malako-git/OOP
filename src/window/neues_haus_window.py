@@ -83,7 +83,7 @@ class NeuesHausWindow:
         # Haus.besitzer.delete(0, END)
 
     def create_input_labels(self):
-        label1 = Label(self.master, text="Bearbeiten sie ein Haus aus der Datenbank", fg="black").grid(row=0, column=1)
+        label1 = Label(self.master, text="Erstellen Sie ein neues Haus in der Datenbank", fg="black").grid(row=0, column=1)
         label1 = Label(self.master, text="Farbe :", fg="black").grid(row=1, column=0)
         label1 = Label(self.master, text="Adresse :", fg="black").grid(row=2, column=0)
         label1 = Label(self.master, text="Baujahr :", fg="black").grid(row=3, column=0)
