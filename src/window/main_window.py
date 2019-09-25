@@ -20,7 +20,7 @@ class MainWindow:
 
     def new_haus_window(self):
         master2 = Toplevel(self.master)
-        NeuesHausWindow(master2)
+        NeuesHausWindow(master2, self.db)
 
     def edit_haus_window(self):
         from window.edit_haus_window import EditHausWindow

@@ -5,10 +5,11 @@ import db_controller
 
 class NeuesHausWindow:
 
-    def __init__(self, master):
+    def __init__(self, master, db):
+        self.db = db
         self.master = master
 
-        self.master.geometry("500x350+300+350")
+        self.master.geometry("600x350+300+350")
         self.master.title("Neues Haus hinzufügen")
 
         self.label1 = self.create_input_labels()
@@ -26,28 +27,6 @@ class NeuesHausWindow:
             self.new_haus_dict[atrib].grid(row=count, column=1)
             count += 1
 
-
-        # Haus.farbe = Entry(self.master)
-        # Haus.farbe.grid(row=1, column=1)
-        # Haus.adresse = Entry(self.master)
-        # Haus.adresse.grid(row=2, column=1)
-        # Haus.baujahr = Entry(self.master)
-        # Haus.baujahr.grid(row=3, column=1)
-        # Haus.wohnflaeche = Entry(self.master)
-        # Haus.wohnflaeche.grid(row=4, column=1)
-        # Haus.zimmer = Entry(self.master)
-        # Haus.zimmer.grid(row=5, column=1)
-        # Haus.preis = Entry(self.master)
-        # Haus.preis.grid(row=6, column=1)
-        # Haus.grundstueckgroesse = Entry(self.master)
-        # Haus.grundstueckgroesse.grid(row=7, column=1)
-        # Haus.badezimmer = Entry(self.master)
-        # Haus.badezimmer.grid(row=8, column=1)
-        # Haus.heizart = Entry(self.master)
-        # Haus.heizart.grid(row=9, column=1)
-        # Haus.besitzer = Entry(self.master)
-        # Haus.besitzer.grid(row=10, column=1)
-
         self.button1 = Button(self.master, text="Haus hinzufügen", fg="green", command=self.add_new_haus).place(x=20,
                                                                                                                 y=300,
                                                                                                                 width=100,
@@ -59,28 +38,18 @@ class NeuesHausWindow:
         self.master.destroy()
 
     def add_new_haus(self):
-        # print(len(self.new_haus_dict))
-        # print(self.newatrib[0])
+        # Get Values and add to DB
         count = 0
         new_haus = []
         for atrib in self.newatrib:
             new_haus.append(self.new_haus_dict[self.newatrib[count]].get())
             count += 1
+        self.db.new_haus_table_entry(new_haus)
 
-        db_controller.DB_Controller.new_haus_table_entry(new_haus)
+        # Clear Entry
+        for atrib in self.new_haus_dict:
+            self.new_haus_dict[atrib].delete(0, END)
 
-
-        # db_controller.DB_Controller.new_haus_table_entry(new_haus_dict["farbe"], new_haus_dict[adresse], new_haus_dict[baujahr], new_haus_dict[wohnflaeche], new_haus_dict[zimmer], new_haus_dict[preis], new_haus_dict[grundstueckgroesse], new_haus_dict[badezimmer], new_haus_dict[heizart], new_haus_dict[besitzer])
-        # Haus.farbe.delete(0, END)
-        # Haus.adresse.delete(0, END)
-        # Haus.baujahr.delete(0, END)
-        # Haus.wohnflaeche.delete(0, END)
-        # Haus.zimmer.delete(0, END)
-        # Haus.preis.delete(0, END)
-        # Haus.grundstueckgroesse.delete(0, END)
-        # Haus.badezimmer.delete(0, END)
-        # Haus.heizart.delete(0, END)
-        # Haus.besitzer.delete(0, END)
 
     def create_input_labels(self):
         label1 = Label(self.master, text="Erstellen Sie ein neues Haus in der Datenbank", fg="black").grid(row=0, column=1)
