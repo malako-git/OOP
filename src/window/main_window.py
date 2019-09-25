@@ -1,10 +1,10 @@
-from db import *
 from window.neues_haus_window import *
 
 
 class MainWindow:
 
-    def __init__(self, master):
+    def __init__(self, master, db):
+        self.db = db
         self.master = master
         self.master.geometry("1000x700+200+200")
         self.master.title("Hausverwaltungs Software")
@@ -29,23 +29,9 @@ class MainWindow:
         EditHausWindow(master3, new_id)
 
     def show_db(self):
-        conn = sqlite3.connect("haeuser.db", timeout=2)  # db erstellen und connecten
-        cur = conn.cursor()  # cursor erstellen
-
-        cur.execute("SELECT *, oid FROM HaeuserOne")
-        haeuser_in_db = cur.fetchall()
-
-        # print(haeuser_in_db)
-
-        print_db = ""
-
-        for haeuser in haeuser_in_db:
-            print_db += str(haeuser[10]) + " " + "\t" + str(haeuser[1]) + " // " + str(haeuser[9]) + "\n"
-
+        print_db = self.db.show_db()
         show_db_label = Label(self.master, text=print_db)
         show_db_label.place(x=400, y=350)
-
-        db.conn.commit()
 
     def delete(self):
         conn = sqlite3.connect("haeuser.db", timeout=2)  # db erstellen und connecten

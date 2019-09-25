@@ -1,15 +1,15 @@
+import sqlite3
+
 from window.main_window import *
 
 
-class DB_Controller():
+class DB_Controller:
 
-    def __init__(self, master, id):
-        self.id = id
-        self.master = master
+    def __init__(self):
         self.conn = sqlite3.connect("haeuser.db", timeout=2)  # db erstellen und connecten
-        self.cur = conn.cursor()  # cursor erstellen#
+        self.cur = self.conn.cursor()  # cursor erstellen#
 
-    def main():
+    def main(self):
         self.cur.execute("""CREATE TABLE IF NOT EXISTS HaeuserOne (
             Farbe TEXT(20),
             Adresse TEXT,
@@ -26,10 +26,10 @@ class DB_Controller():
         self.conn.commit()
 
         master = Tk()
-        MainWindow(master)
+        MainWindow(master, self)
         master.mainloop()
 
-    def new_haus_table_entry(new_haus):
+    def new_haus_table_entry(self, new_haus):
         print("erstelle neuen eintrag in Datenbank")
         self.cur.execute("INSERT INTO HaeuserOne VALUES(?, ?, ?, ? ,?, ?, ?, ?, ?, ?)", (
         new_haus[0], new_haus[1], new_haus[2], new_haus[3], new_haus[4], new_haus[5], new_haus[6], new_haus[7], new_haus[8], new_haus[9]))
@@ -38,7 +38,7 @@ class DB_Controller():
         self.conn.commit()
         # db.conn.close()
 
-    def edit_haus_table_entry(id):
+    def edit_haus_table_entry(self, id):
         print("bearbeite eintrag @ oid" + id)
 
         self.cur.execute("""UPDATE HaeuserOne SET
@@ -71,3 +71,16 @@ class DB_Controller():
                        })
 
         self.conn.commit()
+
+    def show_db(self):
+
+        self.cur.execute("SELECT *, oid FROM HaeuserOne")
+        haeuser_in_db = self.cur.fetchall()
+
+        # print(haeuser_in_db)
+
+        print_db = ""
+
+        for haeuser in haeuser_in_db:
+            print_db += str(haeuser[10]) + " " + "\t" + str(haeuser[1]) + " // " + str(haeuser[9]) + "\n"
+        return (print_db)
