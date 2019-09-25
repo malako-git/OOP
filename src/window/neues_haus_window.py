@@ -27,12 +27,8 @@ class NeuesHausWindow:
             self.new_haus_dict[atrib].grid(row=count, column=1)
             count += 1
 
-        self.button1 = Button(self.master, text="Haus hinzufügen", fg="green", command=self.add_new_haus).place(x=20,
-                                                                                                                y=300,
-                                                                                                                width=100,
-                                                                                                                height=25)
-        self.button1 = Button(self.master, text="Abbrechen", fg="red", command=self.quit).place(x=370, y=300, width=100,
-                                                                                                height=25)
+        self.button1 = Button(self.master, text="Haus hinzufügen", fg="green", command=self.add_new_haus).place(x=20, y=300, width=100, height=25)
+        self.button1 = Button(self.master, text="Abbrechen", fg="red", command=self.quit).place(x=370, y=300, width=100, height=25)
 
     def quit(self):
         self.master.destroy()
