@@ -7,9 +7,11 @@ class DB_Controller():
     def __init__(self, master, id):
         self.id = id
         self.master = master
+        self.conn = sqlite3.connect("haeuser.db", timeout=2)  # db erstellen und connecten
+        self.cur = conn.cursor()  # cursor erstellen#
 
     def main():
-        db.cur.execute("""CREATE TABLE IF NOT EXISTS HaeuserOne (
+        self.cur.execute("""CREATE TABLE IF NOT EXISTS HaeuserOne (
             Farbe TEXT(20),
             Adresse TEXT,
             Baujahr INTEGER,
