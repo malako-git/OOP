@@ -84,3 +84,10 @@ class DB_Controller:
         for haeuser in haeuser_in_db:
             print_db += str(haeuser[10]) + " " + "\t" + str(haeuser[1]) + " // " + str(haeuser[9]) + "\n"
         return (print_db)
+
+    def delete(self, id):
+        try:
+            self.cur.execute("DELETE from HaeuserOne WHERE oid = " + id)
+            self.conn.commit()
+        except Error:
+            print("User Error !!!")

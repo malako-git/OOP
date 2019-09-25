@@ -34,14 +34,8 @@ class MainWindow:
         show_db_label.place(x=400, y=350)
 
     def delete(self):
-        conn = sqlite3.connect("haeuser.db", timeout=2)  # db erstellen und connecten
-        cur = conn.cursor()  # cursor erstellen
         print("lösche eintrag @ oid " + self.id.get())
-        try:
-            cur.execute("DELETE from HaeuserOne WHERE oid = " + self.id.get())
-            conn.commit()
-        except Error:
-            print("User Error !!!")
+        self.db.delete(self.id.get())
 
     def quit(self):
         self.master.destroy()
