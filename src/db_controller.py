@@ -1,5 +1,4 @@
 from window.main_window import *
-from db import *
 
 
 class DB_Controller():
@@ -24,7 +23,7 @@ class DB_Controller():
             Besitzer TEXT
             )""")
         # erstellt einen table in der datenbank haeuser.db und definiert die entrys und deren type
-        db.conn.commit()
+        self.conn.commit()
 
         master = Tk()
         MainWindow(master)
@@ -32,17 +31,17 @@ class DB_Controller():
 
     def new_haus_table_entry(new_haus):
         print("erstelle neuen eintrag in Datenbank")
-        db.cur.execute("INSERT INTO HaeuserOne VALUES(?, ?, ?, ? ,?, ?, ?, ?, ?, ?)", (
+        self.cur.execute("INSERT INTO HaeuserOne VALUES(?, ?, ?, ? ,?, ?, ?, ?, ?, ?)", (
         new_haus[0], new_haus[1], new_haus[2], new_haus[3], new_haus[4], new_haus[5], new_haus[6], new_haus[7], new_haus[8], new_haus[9]))
         # cur.execute("INSERT INTO HaeuserOne (%s) VALUES(?)" %(attr),(data,))
         # cursor.execute("INSERT INTO PRESSURE (" + city + ") values (?)", (pressure,))
-        db.conn.commit()
+        self.conn.commit()
         # db.conn.close()
 
     def edit_haus_table_entry(id):
         print("bearbeite eintrag @ oid" + id)
 
-        db.cur.execute("""UPDATE HaeuserOne SET
+        self.cur.execute("""UPDATE HaeuserOne SET
             Farbe = :farbe,
             Adresse = :adresse,
             Baujahr = :baujahr,
@@ -71,4 +70,4 @@ class DB_Controller():
 
                        })
 
-        db.conn.commit()
+        self.conn.commit()
