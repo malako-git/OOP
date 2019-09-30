@@ -25,20 +25,25 @@ class DB_Controller:
         # erstellt einen table in der datenbank haeuser.db und definiert die entrys und deren type
         self.conn.commit()
 
-        master = Tk()
-        MainWindow(master, self)
-        master.mainloop()
-
-    def new_haus_table_entry(self, new_haus):
+    def new_haus_table_entry(self, haus):
         print("erstelle neuen eintrag in Datenbank")
         self.cur.execute("INSERT INTO HaeuserOne VALUES(?, ?, ?, ? ,?, ?, ?, ?, ?, ?)", (
-        new_haus[0], new_haus[1], new_haus[2], new_haus[3], new_haus[4], new_haus[5], new_haus[6], new_haus[7], new_haus[8], new_haus[9]))
+            haus.farbe,
+            haus.adresse,
+            haus.baujahr,
+            haus.wohnflaeche,
+            haus.zimmer,
+            haus.preis,
+            haus.grundstueckgroesse,
+            haus.badezimmer,
+            haus.heizart,
+            haus.besitzer))
         # cur.execute("INSERT INTO HaeuserOne (%s) VALUES(?)" %(attr),(data,))
         # cursor.execute("INSERT INTO PRESSURE (" + city + ") values (?)", (pressure,))
         self.conn.commit()
         # db.conn.close()
 
-    def edit_haus_table_entry(self, id):
+    def edit_haus_table_entry(self, haus, id):
         print("bearbeite eintrag @ oid" + id)
 
         self.cur.execute("""UPDATE HaeuserOne SET
@@ -54,21 +59,21 @@ class DB_Controller:
             Besitzer = :besitzer
 
             WHERE oid = :oid""",
-                       {
-                           "farbe": farbe_global.get(),
-                           "adresse": adresse_global.get(),
-                           "baujahr": baujahr_global.get(),
-                           "wohnflaeche": wohnflaeche_global.get(),
-                           "zimmer": zimmer_global.get(),
-                           "preis": preis_global.get(),
-                           "grundstueckgroesse": grundstueckgroesse_global.get(),
-                           "badezimmer": badezimmer_global.get(),
-                           "heizart": heizart_global.get(),
-                           "besitzer": besitzer_global.get(),
+                         {
+                             "farbe": haus.farbe,
+                             "adresse": haus.adresse,
+                             "baujahr": haus.baujahr,
+                             "wohnflaeche": haus.wohnflaeche,
+                             "zimmer": haus.zimmer,
+                             "preis": haus.preis,
+                             "grundstueckgroesse": haus.grundstueckgroesse,
+                             "badezimmer": haus.badezimmer,
+                             "heizart": haus.heizart,
+                             "besitzer": haus.besitzer,
 
-                           "oid": id
+                             "oid": id
 
-                       })
+                         })
 
         self.conn.commit()
 
@@ -91,3 +96,7 @@ class DB_Controller:
             self.conn.commit()
         except Error:
             print("User Error !!!")
+
+    def getHaus(self, id):
+        self.cur.execute("SELECT * FROM HaeuserOne WHERE oid = " + id)
+        return self.cur.fetchone()

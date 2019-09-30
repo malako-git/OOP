@@ -5,9 +5,10 @@ import db_controller
 
 class NeuesHausWindow:
 
-    def __init__(self, master, db):
+    def __init__(self, master, db, haus):
         self.db = db
         self.master = master
+        self.haus = haus
 
         self.master.geometry("600x350+300+350")
         self.master.title("Neues Haus hinzufügen")
@@ -16,15 +17,13 @@ class NeuesHausWindow:
         self.label2 = self.create_info_labels()
 
         attributes = Haus.__dict__.keys()
-        self.newatrib = list(filter(lambda a: not a.startswith('__'), attributes))
+        self.filtered_atrib = list(filter(lambda a: not (a.startswith('__') or a.startswith('fill')), attributes))
 
-        print(self.newatrib)
-
-        self.new_haus_dict={}
+        self.list_elements = {}
         count = 1
-        for atrib in self.newatrib:
-            self.new_haus_dict[atrib] = Entry(self.master)
-            self.new_haus_dict[atrib].grid(row=count, column=1)
+        for atrib in self.filtered_atrib:
+            self.list_elements[atrib] = Entry(self.master)
+            self.list_elements[atrib].grid(row=count, column=1)
             count += 1
 
         self.button1 = Button(self.master, text="Haus hinzufügen", fg="green", command=self.add_new_haus).place(x=20, y=300, width=100, height=25)
@@ -34,21 +33,15 @@ class NeuesHausWindow:
         self.master.destroy()
 
     def add_new_haus(self):
-        # Get Values and add to DB
-        count = 0
-        new_haus = []
-        for atrib in self.newatrib:
-            new_haus.append(self.new_haus_dict[self.newatrib[count]].get())
-            count += 1
-        self.db.new_haus_table_entry(new_haus)
+        for atrib in self.filtered_atrib:
+            self.haus.__dict__[atrib] = self.list_elements[atrib].get()
+            self.list_elements[atrib].delete(0, END)
 
-        # Clear Entry
-        for atrib in self.new_haus_dict:
-            self.new_haus_dict[atrib].delete(0, END)
-
+        self.db.new_haus_table_entry(self.haus)
 
     def create_input_labels(self):
-        label1 = Label(self.master, text="Erstellen Sie ein neues Haus in der Datenbank", fg="black").grid(row=0, column=1)
+        label1 = Label(self.master, text="Erstellen Sie ein neues Haus in der Datenbank", fg="black").grid(row=0,
+                                                                                                           column=1)
         label1 = Label(self.master, text="Farbe :", fg="black").grid(row=1, column=0)
         label1 = Label(self.master, text="Adresse :", fg="black").grid(row=2, column=0)
         label1 = Label(self.master, text="Baujahr :", fg="black").grid(row=3, column=0)
@@ -75,9 +68,3 @@ class NeuesHausWindow:
         label2 = Label(self.master, text="Vorname / Nachname", fg="black").grid(row=10, column=2)
 
         return label2
-
-    def filter_methods(self, value):
-        if value.startswith('__'):
-            return False
-        else:
-            return True
