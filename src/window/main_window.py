@@ -24,7 +24,7 @@ class MainWindow:
     def new_haus_window(self):
         haus = Haus()
         master2 = Toplevel(self.master)
-        NeuesHausWindow(master2, self.db, haus)
+        NeuesHausWindow(master2, self, self.db, haus)
 
     def edit_haus_window(self):
         haus = Haus()
@@ -44,6 +44,7 @@ class MainWindow:
 
     def delete(self):
         self.db.delete(self.id.get())
+        self.refresh_db()
 
     def quit(self):
         self.master.destroy()

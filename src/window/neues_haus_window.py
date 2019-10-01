@@ -5,11 +5,11 @@ import db_controller
 
 class NeuesHausWindow:
 
-    def __init__(self, master, db, haus):
+    def __init__(self, master, parent, db, haus):
         self.db = db
         self.master = master
         self.haus = haus
-
+        self.parent = parent
         self.master.geometry("600x350+300+350")
         self.master.title("Neues Haus hinzufügen")
 
@@ -29,6 +29,7 @@ class NeuesHausWindow:
         self.button1 = Button(self.master, text="Abbrechen", fg="red", command=self.quit).place(x=370, y=300, width=100, height=25)
 
     def quit(self):
+        self.parent.refresh_db()
         self.master.destroy()
 
     def add_new_haus(self):
