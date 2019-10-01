@@ -1,3 +1,4 @@
+from sqlite3 import OperationalError
 from window.edit_haus_window import EditHausWindow
 from window.neues_haus_window import *
 
@@ -31,9 +32,8 @@ class MainWindow:
             haus.fillEntitiy(self.db.getHaus(self.id.get()))
             master3 = Toplevel(self.master)
             EditHausWindow(master3, self.db, haus, self.id.get())
-        except Exception:
-            print("Wrong User Input @ ID Entry Widget")
-            print("in main_window.py line 28 - 36")
+        except OperationalError as e:
+            print("Sqlite operational error: {}!".format(e))
 
     def refresh_db(self):
         print_db = self.db.show_db()
@@ -43,7 +43,6 @@ class MainWindow:
         show_db_label.place(x=400, y=350)
 
     def delete(self):
-        print("lösche eintrag @ oid " + self.id.get())
         self.db.delete(self.id.get())
 
     def quit(self):
