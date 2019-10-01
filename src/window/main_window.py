@@ -37,7 +37,9 @@ class MainWindow:
 
     def refresh_db(self):
         print_db = self.db.show_db()
+        show_db_label_category = Label(self.master, text="Besitzer"+ " " + "\t" + "Farbe" + " // " + "Heizart")
         show_db_label = Label(self.master, text=print_db)
+        show_db_label_category.place(x=400, y=300)
         show_db_label.place(x=400, y=350)
 
     def delete(self):
