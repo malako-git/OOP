@@ -10,7 +10,7 @@ class NeuesHausWindow:
         self.master = master
         self.haus = haus
 
-        self.master.geometry("600x350+300+350")
+        self.master.geometry("500x350+300+350")
         self.master.title("Neues Haus hinzufügen")
 
         self.label1 = self.create_input_labels()
